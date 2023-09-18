@@ -7,8 +7,7 @@
 #include <iostream>
 #include "Hello.h"
 
-int
-main() {
+int main() {
   // Write your code below...
   PrintHello();
   std::cout << "ID: 111703045\n"; // Please replace your student ID.
