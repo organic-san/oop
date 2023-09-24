@@ -1,0 +1,39 @@
+Programming Assignment
+
+作業目錄: `/usr/local/class/oop/assign/assign0`
+
+複製作業: 
+```
+> mtchi@oop 10:42am [150] oop> cp -R /usr/local/class/oop/assign/assign0 .
+> mtchi@oop 10:43am [151] oop> cd assign0
+```
+
+編譯與刪除執行檔案:
+```
+> mtchi@oop 10:43am [152] assign0> make
+
+g++ -g -Wall -Wno-deprecated -I./include -c -o O_i86pc/Hello.o Hello.cc
+g++ -g -Wall -Wno-deprecated -I./include -c -o O_i86pc/STest.o STest.cc
+g++ -o STest_i86pc -g -Wall -Wno-deprecated -I./include O_i86pc/Hello.o O_i86pc/STest.o
+
+> mtchi@oop 10:43am [153] assign0> make clean
+
+rm -f O_i86pc/Hello.o O_i86pc/STest.o STest_i86pc core* *~
+```
+
+繳交作業:
+```
+> mtchi@oop 10:43am [154] assign0 > /usr/local/class/oop/bin/submit 0
+
+Submitting OOP assignment number 0: assign0...
+Step 1: checking that you are in the assign0 directory...
+Step 2: copying your entire code tree to /tmp for processing...
+Step 3: removing unnecessary files (*.o *~)...
+rm -f O_i86pc/Hello.o O_i86pc/STest.o STest_i86pc core* *~
+Step 4: compressing your files into the submission directory...
+SHA256 55024aab171428474ce6e118d7360e64bb7a3121b86a92564949d10808e74fe0
+Step 5: cleaning up temporary files...
+Submission successful!
+```
+
+檢查作業上傳: http://www.cs.nccu.edu.tw/~oop/oopAssignment/

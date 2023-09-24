@@ -14,6 +14,7 @@
 ***************************************************************************/
 
 /* $Log:$ */
+#include "AnsiPrint.h"
 
 const int kNPip = 13;
 const int kNSuit = 4;
@@ -22,9 +23,10 @@ const int kCardWidth = 11;
 const int kCardHeight = 11;
 const int MaxCardInOneLine = 5;
 
-void printCard(const int);
-
+template<typename item> item getRandItem(vector<item> &v);
+color fontColor(const char);
 void printLine(const int, const int, const char);
+void printCard(const int);
 
 /* 'x's are special characters that will be replaced in printing */
 static char card[kNPip][kCardHeight][kCardWidth+1] = {{
