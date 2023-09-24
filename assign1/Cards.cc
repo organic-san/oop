@@ -45,10 +45,7 @@ template<typename item> item getRandItem(vector<item> &v) {
 }
 
 color fontColor(const char L) {
-  if(L == 'D' || L == 'H')
-    return red;
-  else
-    return black;
+  return (L == 'D' || L == 'H') ? red : black;
 }
 
 void printLine(const int lineNum, const int cardNum, const char replaceLetter) {
@@ -58,18 +55,19 @@ void printLine(const int lineNum, const int cardNum, const char replaceLetter) {
     throw "err: cardNum bigger than " + to_string(kNPip) + ".";
   }
 
+  //replace "x" to specific suit
   string t = card[cardNum][lineNum];
-
   for (int i = 0; i < kCardWidth; i++) {
     if (t[i] == 'x') t[i] = replaceLetter;
   }
-
+  
   AnsiPrint(t.c_str(), fontColor(replaceLetter), white);
 }
 
 void printCard(const int cardAmount) {
-  vector<pair<char, int>> cardArr, outputArr;
+  vector<pair<char, int>> cardArr, deckArr;
 
+  // initial card list
   char suits[kNSuit] = {'C', 'D', 'H', 'S'};
   for(int i = 0; i < kNSuit; i++) {
     for(int j = 0; j < kNPip; j++) {
@@ -77,22 +75,23 @@ void printCard(const int cardAmount) {
     }
   }
 
+  // get random card from card list and put into deck
   for(int i = 0; i < cardAmount; i++) {
-    outputArr.push_back(getRandItem(cardArr));
+    deckArr.push_back(getRandItem(cardArr));
   }
 
-  for(int i = 0; i < (int(outputArr.size()) / MaxCardInOneLine + 1); i++) {
+  //print cards in deck
+  for(int i = 0; i < (int(deckArr.size()) / MaxCardInOneLine + 1); i++) {
     for(int j = 0; j < kCardHeight; j++) {
       for(int k = 0; 
-          k < min(MaxCardInOneLine, int(outputArr.size() - i * MaxCardInOneLine)); 
+          k < min(MaxCardInOneLine, int(deckArr.size() - i * MaxCardInOneLine)); 
           k++) {
         printLine(j, 
-                  outputArr[i * MaxCardInOneLine + k].second, 
-                  outputArr[i * MaxCardInOneLine + k].first);
+                  deckArr[i * MaxCardInOneLine + k].second, 
+                  deckArr[i * MaxCardInOneLine + k].first);
         cout << " ";
       }
       cout << endl;
     }
   }
-
 }
