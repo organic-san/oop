@@ -18,7 +18,7 @@
 extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 #include <assert.h>
 }
 
@@ -76,11 +76,15 @@ main(int argc, char **argv) {
 
   // You are asked to fill in a few missing statements here
 
-  
+  if(ncards > 52) {
+    cout << "Sorry, number of cards can not exceed 52." << endl;
+    exit(-1);
+  }
 
+  printCard(ncards);
 
   // Print my id at the end of the program
-  PrintMyID("u1234567");
+  PrintMyID("u111703045");
 
   return 0;
 

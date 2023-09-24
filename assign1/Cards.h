@@ -15,14 +15,19 @@
 
 /* $Log:$ */
 
-const int kNPip=13;
-const int kNSuit=4;
-const int kNCards=52;
-const int kCardWidth=11;
-const int kCardHeight=11;
+const int kNPip = 13;
+const int kNSuit = 4;
+const int kNCards = 52;
+const int kCardWidth = 11;
+const int kCardHeight = 11;
+const int MaxCardInOneLine = 5;
+
+void printCard(const int);
+
+void printLine(const int, const int, const char);
 
 /* 'x's are special characters that will be replaced in printing */
-static char card[kNPip][kCardHeight][kCardWidth+1]={{
+static char card[kNPip][kCardHeight][kCardWidth+1] = {{
   "***********",
   "*1x       *",
   "*         *",
