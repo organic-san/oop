@@ -27,6 +27,7 @@ LIBS     = $(LIBDIR) -lm -lc #-lucb  -liostream
 
 CXX      = g++
 CXXFLAGS = -g -Wall -I$(INCDIR) #-D__STDC__ 
+CXXFLAGS += -Wno-unused-variable
 TARG     = $(TARGET)_$(HOSTTYPE)
 LIB      = lib$(PACKAGE)_$(HOSTTYPE).a
 
