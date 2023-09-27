@@ -21,7 +21,7 @@ using namespace std;
 //vector operator<< debug tool
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& vec) {
   os << "[";
-  for(typename vector<T>::const_iterator iter = vec.begin(); iter != vec.end(); ++iter) {
+  for(auto iter = vec.begin(); iter != vec.end(); ++iter) {
     if (iter != vec.begin()) os << ", ";
     os << *iter;
   }
@@ -81,7 +81,7 @@ void printCard(const int cardAmount) {
   }
 
   //print cards in deck
-  for(int i = 0; i < (int(deckArr.size()) / MaxCardInOneLine + 1); i++) {
+  for(int i = 0; i < (int(deckArr.size() - 1) / MaxCardInOneLine + 1); i++) {
     for(int j = 0; j < kCardHeight; j++) {
       for(int k = 0; 
           k < min(MaxCardInOneLine, int(deckArr.size() - i * MaxCardInOneLine)); 
