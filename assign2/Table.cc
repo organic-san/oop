@@ -36,6 +36,7 @@ int Table::getSize() const {
 //debug tool
 void Table::getInfo(int i) const {
     cout << "[";
+    i = min(i, int(deckArr.size()));
     for(auto iter = deckArr.begin(); iter != deckArr.begin() + i; ++iter) {
         if (iter != deckArr.begin()) cout << ", ";
         cout << "(" << iter->getSuit() << " " << iter->getPip() << ")";
