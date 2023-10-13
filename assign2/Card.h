@@ -20,6 +20,8 @@
 #ifndef _CARD_H
 #define _CARD_H
 
+#include "AnsiPrint.h"
+
 // a few card related constants
 const int kNPip = 13;
 const int kNSuit = 4;
@@ -39,24 +41,26 @@ enum suit {spare, heart, diamond, club};
 class Card {
 
 public:
-    // Constructor
-    Card(int myId);
-    
-    // accessors
-    int getID(void) const;
-    int getPip(void) const; 
-    int getSuit(void) const;
-    
-    // modifiers
-    void setID(int newid);
+  // Constructor
+  Card(int myId);
+  
+  // accessors
+  int getID(void) const;
+  int getPip(void) const; 
+  int getSuit(void) const;
+  
+  // modifiers
+  void setID(int newid);
     
     // print the face value and suit of the card
-    void print() const;
+  void print(bool hidden, bool resetLine = false) const;
+
+  // convert id from suit and pip
+  static int IDConverter(int suit, int pip);
 
 private:
-
-    // your private or internal stuff goes here
-    
+  int id;
+  mutable int line;
 };
 
 #endif

@@ -21,8 +21,10 @@ const int kCardWidth=11;
 // number of characters in height for displaying a card
 const int kCardHeight=11;
 
+const int kCardType = 14;
+
 /* 'x's are special characters that will be replaced in printing */
-const char card[14][kCardHeight][kCardWidth+1]={{
+const char card[kCardType][kCardHeight][kCardWidth+1]={{
   "***********",
   "*1x       *",
   "*         *",

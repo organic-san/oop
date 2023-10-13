@@ -28,46 +28,51 @@
  * 4. shows his/her cards to the screen with the first card facing up or down
  */
 
+#include <vector>
 #include "Card.h"
+#include "Table.h"
+using namespace std;
 
 class BJackPlayer {
     
 public:
 
-    // default constructor
-    // all initialization should be in this constructor
-    BJackPlayer(const char *name);
-    
-    /**
-     * Start a new hand with the given first card.
-     */
-    void start(void);
-    
-    /**
-     * add a card to the end of the current hand
-     */
-    void addCard(Card newCard);
-    
-    /**
-     * total of the face values of the cards at hand
-     */
-    int totalPoints(void) const;
-    
-    /**
-     * open the first card so it faces up
-     */
-    void openFirstCard();
+  // default constructor
+  // all initialization should be in this constructor
+  BJackPlayer(const char *name);
+  
+  /**
+   * Start a new hand with the given first card.
+   */
+  void start(void);
+  
+  /**
+   * add a card to the end of the current hand
+   */
+  void addCard(Card newCard);
+  
+  /**
+   * total of the face values of the cards at hand
+   */
+  int totalPoints(void) const;
+  
+  /**
+   * open the first card so it faces up
+   */
+  void openFirstCard();
 
-    /**
-     * print all cards of the current hand to the screen 
-     * It should check if the user has a valid hand first.
-     */
-    void showCards() const;
-    
+  /**
+   * print all cards of the current hand to the screen 
+   * It should check if the user has a valid hand first.
+   */
+  void showCards() const;
+  
 private:
-    
-    // your private/internal stuff goes here
-    
+
+  vector<Card> cardList;
+  bool isOpenFirstCard;
+  string name;
+
 };
 
 
