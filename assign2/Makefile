@@ -10,7 +10,7 @@ PACKAGE  = BJPlayer
 # The executable program
 TARGET   = BJTest
 # The C++ source programs (.cc) [multiple files]
-SOURCES  = AnsiPrint Card BJackPlayer 
+SOURCES  = AnsiPrint Card BJackPlayer Table
 # The C++ source program for testing your implementation
 TEST     = BJTest
 HOSTTYPE = $(shell arch)

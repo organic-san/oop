@@ -79,12 +79,29 @@ main(int argc, char **argv) {
 
     srand(seed);
 
+    auto table = Table::getInstance();
+
     BJackPlayer bjplayer("BJPlayer");
 
     // put your code here
 
-    PrintMyID("112703000");
+    bjplayer.start();
+
+    if(showFirst) bjplayer.openFirstCard();
+    while (bjplayer.totalPoints() <= 21) { 
+      auto newCard = table.getCard();
+      bjplayer.addCard(newCard);
+    }
+
+    bjplayer.showCards();
+
+    cout << "Total points: " << bjplayer.totalPoints() << endl;
+
+    // put your code here
+
+    PrintMyID("111703045");
     
     return 0;
 }
 
+std::vector<Card> Table::deckArr;
