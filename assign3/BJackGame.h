@@ -26,13 +26,14 @@ class BJackPlayer;
 class BJackDealer;
 
 // menu for actions that are used in the black jack game
-const char * const menuItems[]={
-                                "One more Card",
-                                "Enough",
-                                "Restart",
-                                "Quit"
-                                };
+const char * const menuItems[] = {
+  "One more Card",
+  "Enough",
+  "Restart",
+  "Quit"
+};
 enum option {o_more=1,o_enough,o_restart,o_quit};
+enum state {playing, waiting};
 
 // the black jack game
 class BJackGame {
@@ -75,6 +76,13 @@ private:
     BJackDealer &bjdealer;
     
     // TODO: more data and functions to add here ...
+
+    // I wanna put this in to BJackPlayer, but there can't access
+    // initial constant integer...
+    int playerCredit = initCredit;
+    int dealerCredit = initCredit;
+
+    state gameplayState = waiting;
 
 };
 

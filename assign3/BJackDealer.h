@@ -18,9 +18,13 @@
 #ifndef _BJACKDEALER_H
 #define _BJACKDEALER_H
 
+#include <vector>
 
 // number of cards in a standard deck
 const int kMaxNCards=52;
+const int kMinCardsToStartGame=17;
+const int kMaxPointInOneTurn = 21;
+const int kMinPointToWinWhenPlayerOverMaxPoint = 21;
 // result of a game
 enum result {tie, win, lose};
 
@@ -35,7 +39,7 @@ class BJackPlayer;
  * 3. check if there is enough cards left for user request
  */
 
-class BJackDealer {
+class BJackDealer : public BJackPlayer {
     
 public:
     
@@ -50,12 +54,7 @@ public:
   /**
    * return a valid card ID to the player
    */
-  int giveCard(void);
-  
-  /**
-   * Give myself (the dealer) one more card
-   */
-  void addCard(void);
+  Card giveCard(void);
   
   /**
    * Give myself (the dealer) more cards in order to win the player
@@ -73,11 +72,6 @@ public:
    * starting a new game
    */
   void start(void);
-  
-  /**
-   * open the first card so it faces up
-   */
-  void openFirstCard();
 
   /**
    * retain the whole set of cards and shuffle 
@@ -89,15 +83,14 @@ public:
    */
   void shuffle(long seed);
   
-  /**
-   * show the dealer's cards to the screen
-   */
-  void showCards(void) const;
-  
 private:
   
   // TODO: your private or internal stuff goes here ...
   
+  int nSet;
+  std::vector<int> table;
+
+  int dealCard();
 };
 
 #endif // _BJACKDEALER_H

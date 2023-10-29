@@ -31,20 +31,16 @@ using namespace std;
 
 // constructor 
 // nDeck is the number of standard decks that the dealer will deal with
-BJackDealer::BJackDealer(int nSet) {
+BJackDealer::BJackDealer(int nSet) 
+: BJackPlayer("Dealer"), nSet(nSet) {
 
 }
 
 // distribute a card to the player
-int
+Card
 BJackDealer::giveCard() {
-
-}
-
-// give the dealer one card unconditionally
-void 
-BJackDealer::addCard() {
-
+  Card temp(dealCard());
+  return temp;
 }
 
 // give the dealer as many cards as necessary to exceed the player 
@@ -54,7 +50,18 @@ BJackDealer::addCard() {
 
 void
 BJackDealer::addCards(int oppTotal) {
+  while (judge(oppTotal) != win && totalPoints() <= kMaxPointInOneTurn) {
+    addCard(giveCard());
+  }
+  
+}
 
+int BJackDealer::dealCard() {
+  if(table.size() < 0) throw "err: Table::getCard(): no more card on the table.";
+  auto iter = table.begin();
+  int temp = *iter;
+  table.erase(table.begin());
+  return temp;
 }
 
 // Determine who has win the game.
@@ -63,7 +70,22 @@ BJackDealer::addCards(int oppTotal) {
 
 result
 BJackDealer::judge(int oppTotal) const {
-
+  const int myTotalPoints = totalPoints();
+  if(oppTotal < kMaxPointInOneTurn && myTotalPoints < kMaxPointInOneTurn) {
+    if(oppTotal < myTotalPoints)
+      return win;
+    else
+      return lose;
+  } else if(oppTotal > kMaxPointInOneTurn && myTotalPoints <= kMaxPointInOneTurn) {
+    if(myTotalPoints >= kMinPointToWinWhenPlayerOverMaxPoint)
+      return win;
+    else
+      return lose;
+  } else if(oppTotal <= kMaxPointInOneTurn && myTotalPoints > kMaxPointInOneTurn) {
+    return lose;
+  } else {
+    return tie;
+  }
 }
 
 // start a new game
@@ -72,30 +94,34 @@ BJackDealer::judge(int oppTotal) const {
 
 void
 BJackDealer::start(void) {
-
+  if(int(table.size()) < nSet * kMinCardsToStartGame) shuffle();
+  nCards=0;
+  showAll=false;
 }
 
 // shuffle the deck of cards
 void 
 BJackDealer::shuffle(void) {
+  table.clear();
+  for(int k = 0; k < nSet; k++) {
+        for(int i = 0; i < kNSuit; i++) {
+            for(int j = 0; j < kNPip; j++) {
+                table.push_back((j * kNSuit + i) % (kMaxNCards));
+            }
+        }
+    }
 
+    for(int i = 0; i < kNSuit * kNPip * nSet; i++) {
+        int index = rand() % (kNSuit * kNPip * nSet - i);
+        table.push_back(table[index]);
+        table.erase(table.begin() + index);
+    }
 }
 
 // reset the seed before shuffling
 void
 BJackDealer::shuffle(long seed) {
-
-}
-
-// open the dealer's first card 
-void 
-BJackDealer::openFirstCard(void) {
-
-}
-
-// show the dealer's hand to the screen
-void 
-BJackDealer::showCards(void) const {
-
+  srand(seed);
+  shuffle();
 }
 

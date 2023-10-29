@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/program/C/univ/oop/assign2",
-      "program": "d:/program/C/univ/oop/assign2/build/Debug/outDebug",
+      "cwd": "d:/program/C/univ/oop/assign3",
+      "program": "d:/program/C/univ/oop/assign3/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

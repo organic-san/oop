@@ -95,6 +95,6 @@ main(int argc, char **argv) {
 	// play the game until the user quit
 	while( bjgame.oneRun() );
 
-	PrintMyID("1117030XX");
+	PrintMyID("111703045");
 	return 0;
 }
