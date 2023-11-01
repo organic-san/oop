@@ -18,10 +18,6 @@
 #ifndef _VECTOR_H
 #define _VECTOR_H
 
-// scalar multiplication
-class Vector;
-Vector operator* (double scale, Vector v);
-
 class Vector {
 
 public:
@@ -53,8 +49,31 @@ public:
 
     /* operator overloading */
 	 
+    double length() const;
 
+    // negative operator
+    friend Vector operator-(const Vector &self);
 
+    // +-* operators
+    Vector operator+(const Vector &other) const;
+    Vector operator-(const Vector &other) const;
+    Vector operator*(const double scalar) const;
+    friend Vector operator*(const double scalar, const Vector &v);
+
+    // assignment operators
+    Vector& operator=(const Vector &other);
+    Vector& operator+=(const Vector &other);
+    Vector& operator-=(const Vector &other);
+    Vector& operator*=(const double scalar);
+    
+    // array subscript operator
+    double operator[](const int index) const;
+
+    // comparison operators
+    bool operator==(const Vector &other) const;
+    bool operator!=(const Vector &other) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Vector &v);
 
 private:
 
@@ -66,6 +85,11 @@ private:
     int fDimension;
     // array of double for storing vector elements
     double *fElements;
+
+    template<class _FUNC> void forEachDim(_FUNC) const;
+    template<class _FUNC> void forEachAlloc(_FUNC) const;
+
+    const int defaultVectorDimSize = 2;
 
 };
 
