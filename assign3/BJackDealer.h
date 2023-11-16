@@ -39,10 +39,12 @@ class BJackPlayer;
  * 3. check if there is enough cards left for user request
  */
 
+// 繼承自BJackPlayer
 class BJackDealer : public BJackPlayer {
     
 public:
-    
+  // 刪減部分函數與變數，改為繼承自BJackPlayer
+
   /**
    * constructor: 
    * nSet is the number of decks of cards that you want the dealer 

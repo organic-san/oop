@@ -26,7 +26,6 @@ extern "C" {
 }
 
 using namespace std;
-
 #include <iostream>
 #include "AnsiPrint.h"
 #include "CardPat.h"
@@ -118,9 +117,9 @@ BJackPlayer::showCards() const {
   int curCard=0, lastCard;
   
   while(curCard < nCards) {
-    for(unsigned int i=0;i<kCardHeight;i++) {
+    for(int i=0;i<kCardHeight;i++) {
       lastCard = Min(curCard+kNCardPerRow, nCards);
-      if (i < strlen(name)) {
+      if (i < (int)strlen(name)) {
 	cout << name[i] << " ";
       } else {
 	cout << "  ";

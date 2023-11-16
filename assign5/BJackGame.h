@@ -18,6 +18,7 @@
 #ifndef _BJACKGAME_H
 #define _BJACKGAME_H
 
+
 #include "ConsoleMenu.h"
 
 // forward declaration
@@ -25,11 +26,14 @@ class BJackPlayer;
 class BJackDealer;
 
 // menu for actions that are used in the black jack game
-const char * const menuItems[]={"One more Card",
-				"Enough",
-				"Restart",
-				"Quit"};
+const char * const menuItems[] = {
+  "One more Card",
+  "Enough",
+  "Restart",
+  "Quit"
+};
 enum option {o_more=1,o_enough,o_restart,o_quit};
+enum state {playing, waiting};
 
 // the black jack game
 class BJackGame {
@@ -50,6 +54,9 @@ public:
 
 private:
 
+    // menu item strings
+    ConsoleMenu menu;
+    
     // routines to handle four actions
     // give the player one more card
     void moreCard();
@@ -59,22 +66,23 @@ private:
     void restart();
     // quitting the game
     void quit();
-    
-    // flag to indicate if we have a valid game
-    bool over;
-    
-    // menu item strings
-    ConsoleMenu menu;
+
+    // credits
+    static const int initCredit = 3;
+    static const int betCredit = 1;
     
     // references to a player and a dealer
     BJackPlayer &bjplayer;
     BJackDealer &bjdealer;
+    
+    // TODO: more data and functions to add here ...
 
-    // credits
-    static const int initCredit=10;
-    static const int betCredit=1;
-    int playerCredit;
-    int dealerCredit;
+    // I wanna put this in to BJackPlayer, but there can't access
+    // initial constant integer...
+    int playerCredit = initCredit;
+    int dealerCredit = initCredit;
+
+    state gameplayState = waiting;
 
 };
 

@@ -67,6 +67,7 @@ public:
      */
     void showCards() const;
     
+// 更改成protected
 protected:
     
     // your private/internal stuff goes here

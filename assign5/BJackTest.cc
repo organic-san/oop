@@ -11,7 +11,7 @@
      Tsai-Yen Li (li@cs.nccu.edu.tw)
    HISTORY
      Tsai-Yen Li - Oct 12, 1998: Created.
-     Ming-Te Chi - Nov 10, 2023: Revised.	     
+     Ming-Te Chi - Oct 15, 2023: Revised.
 ***************************************************************************/
 
 /* $Log:$ */
@@ -39,8 +39,8 @@ void
 PrintMyID(const char *studId) {
 
   char *str= new char[sizeof(studId)+5];
-  sprintf(str,"ID: %s",studId);
-  AnsiPrint(str,yellow,red,true,true);
+  sprintf(str, "ID: %s", studId);
+  AnsiPrint(str, yellow, red, true, true);
   cout << endl << endl;
   delete [] str;
 
@@ -66,35 +66,35 @@ PrintUsage(const char *progName) {
 int
 main(int argc, char **argv) {
 
-  int ndecks = 2;  // number of cards to draw
+	int ndecks = 2;  // number of cards to draw
   long seed = 1;
   
   if (argc==3) {
     seed = atoi(argv[1]); // the first argument is the seed
-	ndecks = atoi(argv[2]); // the second argument is the number of decks
+    ndecks = atoi(argv[2]); // the second argument is the number of decks
   } else if (argc==2) {
-	  if (argv[1][1]=='h') {    // check the first argument is "-h"
-	    PrintUsage(argv[0]);
-	    exit(-1);
+    if (argv[1][1]=='h') {    // check the first argument is "-h"
+      PrintUsage(argv[0]);
+      exit(-1);
     } else {
-	    seed = atoi(argv[1]); // the first argument is the seed
-	  }
-	} else if (argc>3) {
-	  PrintUsage(argv[0]);
-	  exit(-1);
+      seed = atoi(argv[1]); // the first argument is the seed
+    }
+  } else if (argc>3) {
+    PrintUsage(argv[0]);
+    exit(-1);
   }
   srand(seed);
 
-  // create an instance of player and dealer
-  BJackPlayer bjplayer("Player");
-  BJackDealer bjdealer(ndecks);
+	// create an instance of player and dealer
+	BJackPlayer bjplayer("Player");
+	BJackDealer bjdealer(ndecks);
 
-  // create an instance of the bj game with the given player an dealer
-  BJackGame bjgame(bjplayer,bjdealer);
+	// create an instance of the bj game with the given player an dealer
+	BJackGame bjgame(bjplayer, bjdealer);
 
-  // play the game until the user quit
-  while(bjgame.oneRun());
+	// play the game until the user quit
+	while( bjgame.oneRun() );
 
-  PrintMyID("1127030XX");
-
+	PrintMyID("111703045");
+	return 0;
 }

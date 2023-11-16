@@ -67,7 +67,8 @@ public:
      */
     void showCards() const;
     
-private:
+// 更改成protected
+protected:
     
     // your private/internal stuff goes here
     
@@ -75,12 +76,9 @@ private:
     int nCards; // current number of cards at hand
     Card cards[kMaxCards]; // the current hand
     int showAll; // a flag indicating the first card is facing up or down  
-    
     char *name;
     
 };
 
 
 #endif // _BJACKPLAYER_H
-
-

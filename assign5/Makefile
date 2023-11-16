@@ -26,7 +26,7 @@ LIBS     = $(LIBDIR) -lm -lc
 # You may not need to modify anything below
 
 CXX      = g++
-CXXFLAGS = -g -Wall -Wno-deprecated -I$(INCDIR) #-D__STDC__ 
+CXXFLAGS = -Wall -Wno-deprecated -I$(INCDIR) #-D__STDC__ 
 TARG     = $(TARGET)_$(HOSTTYPE)
 LIB      = lib$(PACKAGE)_$(HOSTTYPE).a
 

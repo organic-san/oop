@@ -16,32 +16,32 @@
 /* $Log: ConsoleMenu.cc,v $
  * */
 
-extern "C" {
-#include <string.h>
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-}
-
+#include <cstring>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
 #include <iostream>
 #include "ConsoleMenu.h"
 
 using namespace std;
+
+
 /**
  * Constructor: the only one. These is no default constructor
  */
 ConsoleMenu::ConsoleMenu(int numItem, const char * const * menuItems) {
 
-  // make sure that the number of items is greater than or equal to 0
-  assert(numItem>=0);
-  nItems=numItem;
-  // allocate enough memory for hold the item pointers
-  items = new char *[nItems];
-  // duplicate each menu items
-  for(int i=0; i<nItems; i++) {
-	items[i]=strdup(menuItems[i]);
-  }
-  
+    // make sure that the number of items is greater than or equal to 0
+    assert(numItem>=0);
+    nItems=numItem;
+    // allocate enough memory for hold the item pointers
+    items = new char *[nItems];
+    // duplicate each menu items
+    for(int i=0; i<nItems; i++) {
+        items[i]=strdup(menuItems[i]);
+    }
+
 }
 
 /**
@@ -51,10 +51,10 @@ ConsoleMenu::ConsoleMenu(int numItem, const char * const * menuItems) {
 void 
 ConsoleMenu::print() const {
 
-  //cout << endl;
-  for(int i=0;i<nItems;i++) {
-    cout << i+1 << ". " << items[i] << "   ";
-  }
+    //cout << endl;
+    for(int i=0;i<nItems;i++) {
+        cout << i+1 << ". " << items[i] << "   ";
+    }
 
 }
 
@@ -66,7 +66,7 @@ void
 ConsoleMenu::setMenuItem(int whichItem, const char *menuItem) {
 
     if ((whichItem<0)||(whichItem>=nItems)) 
-	return;
+        return;
     free(items[whichItem]);
     items[whichItem]=strdup(menuItem);
 
@@ -84,9 +84,14 @@ int
 ConsoleMenu::getAnswer() const {
 
     int choice=0;
+    string input;
+
     do {
-      cout << "\tChoose one: ";
-      cin >> choice;
+        cout << "\tChoose one: ";
+
+        getline(cin, input);
+        choice = atoi(input.c_str());
+        
     } while((choice<=0)||(choice>nItems));
     cout << endl;
     return choice;

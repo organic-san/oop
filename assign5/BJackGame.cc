@@ -15,7 +15,6 @@
 
 /* $Log:$ */
 
-using namespace std;
 #include <iostream>
 #include "AnsiPrint.h"
 #include "Card.h"
@@ -23,151 +22,113 @@ using namespace std;
 #include "BJackPlayer.h"
 #include "BJackDealer.h"
 
+using namespace std;
+
 // only constructor
 // Must be given a valid (initialized) game player and dealer
 // Menu is constructed internally to provide basic text interface
 // We must use an initialization list here.
-
-BJackGame::BJackGame(BJackPlayer &bjp, BJackDealer &bjd) : menu(sizeof(menuItems)/sizeof(char *),menuItems), bjplayer(bjp), bjdealer(bjd) {
-  
-  over=true;
-  playerCredit=dealerCredit=initCredit;
-  
-}
+BJackGame::BJackGame(BJackPlayer &bjp, BJackDealer &bjd) 
+: menu(sizeof(menuItems)/sizeof(char *),menuItems), 
+  bjplayer(bjp), bjdealer(bjd) {}
 
 // one run of the game
-// take and process a use action
-
+// take and process a user action
+// show current hands for both players at the end of a run.
 bool
 BJackGame::oneRun() {
-  
-  int choice=0;
-
-  // main menu processing
-  menu.print();
-  choice=menu.getAnswer();
-  switch(choice) {
-  case o_more:
-    moreCard();
-    break;
-  case o_enough:
-    enough();
-    break;
-  case o_restart:
-    restart();
-    break;
-  case o_quit:
-    return false;
-  default:
-    break;
-  }
-  // print the cards at hand at the end of each process loop
   bjplayer.showCards();
-  if (over) 
-      bjdealer.openFirstCard();
   bjdealer.showCards();
-
+  menu.print();
+  int ans = menu.getAnswer();
+  switch (ans) {
+    case o_more: moreCard(); break;
+    case o_enough: enough(); break;
+    case o_restart: restart(); break;
+    case o_quit: return false; break;
+  }
   return true;
-
 }
 
 // give the player one more card
 // check if we can do that first
-
 void 
 BJackGame::moreCard() {
-
-  // check if it is legal to do this
-  if (over) {
-    cout << "Game Over" << endl;
+    if(gameplayState == waiting) {
+    cout << "Game is over. Choose '" << 
+    menuItems[o_restart - 1] <<
+    "' to restart a game." << endl;
     return;
   }
 
-  int points=bjplayer.totalPoints(); 
-  if (points<=0) {
-    // the game may not have started yet
-    cout << "You need to start a new game first" << endl;
-  } else if (points <= 21) {
-    // legal, take actions
-    bjplayer.addCard(bjdealer.giveCard());
-  } else {
-    // you are asking too much
-    cout << "You are over 21 already" << endl;
+  if(bjplayer.totalPoints() > kMaxPointInOneTurn) {
+    cout << "You are over " << kMaxPointInOneTurn <<" already" << endl;
+    return;
   }
+
+  bjplayer.addCard(bjdealer.giveCard());
 }
 
 // give the dealer enough cards to try to win the player
 // determine who win the game at the end
-
 void 
 BJackGame::enough() {
-
-  // check legality: game might be over
-  if (over) {
-    cout << "Game Over" << endl;
+  if(gameplayState == waiting) {
+    cout << "Game is over. Choose '" << 
+    menuItems[o_restart - 1] <<
+    "' to restart a game." << endl;
     return;
   }
 
-  if (bjplayer.totalPoints() > 0) { 
-    int total=bjplayer.totalPoints();
-    // add as many cards as needed
-    bjdealer.addCards(total);
-    // determine who win
-    switch (bjdealer.judge(total)) {
+  bjdealer.addCards(bjplayer.totalPoints());
+  bjdealer.openFirstCard();
+
+  result r = bjdealer.judge(bjplayer.totalPoints());
+  switch (r) {
     case win:
-	playerCredit += betCredit;
-	dealerCredit -= betCredit;
-	cout << "You win. Good job.";
-	break;
+      cout << " win. Try again.";
+      dealerCredit ++;
+      playerCredit --;
+      break;
     case lose:
-	playerCredit -= betCredit;
-	dealerCredit += betCredit;
-	cout << "I win. Try again.";
-	break;
-    case tie: 
-	cout << "It's a Tie.";
-	break;
-    default:
-	break;
-    }
-    cout << "(You have " << playerCredit << " points, ";
-    cout << "I have " << dealerCredit << " points.)";
-    cout << endl;
-    over=true;
-  } else {
-    // we don't have a valid game yet.
-    cout << "You need to start a new game first" << endl;
+      cout << "You win. Good job.";
+      playerCredit ++;
+      dealerCredit --;
+      break;
+    case tie:
+      cout << "It's a Tie.";
+      break;
   }
 
+  cout << "(You have "<< playerCredit << " Credits," << 
+  " I have " << dealerCredit << " Credits.)" << endl;
+  gameplayState = waiting;
 }
 
 // restart the game by giving each player two new cards
+// need to check if any one broke (bankrupt).
 void 
 BJackGame::restart() {
-
-  if (!over) {
-    cout << "Game is not over yet. Choose 'enough' to end a game" << endl;
+  if(playerCredit <= 0 || dealerCredit <= 0) {
+    cout << "Sorry. Game over. No loan here." << endl;
     return;
   }
-  // restart the game if both sides have positive credits
-    if ((playerCredit <=0) || (dealerCredit <=0)) {
-	cout << "Sorry. Game over. No loan here." << endl;
-	return;
-    }
-  // since the dealer needs to check for enough cards,
-  // the start() function for the dealer class needs to be called 
-  // before the player class
+  if(gameplayState == playing) {
+    cout << "Game is not over yet. Choose '" << 
+    menuItems[o_enough - 1] <<
+    "' to end a game." << endl;
+    return;
+  }
   bjdealer.start();
   bjplayer.start();
-  // first run
+  bjdealer.addCard(bjdealer.giveCard());
   bjplayer.addCard(bjdealer.giveCard());
-  bjdealer.addCard();
-  // second run
+  bjdealer.addCard(bjdealer.giveCard());
   bjplayer.addCard(bjdealer.giveCard());
-  bjdealer.addCard();
-  // view the first card
   bjplayer.openFirstCard();
-  over=false;
-
+  gameplayState = playing;
 }
+
+void 
+BJackGame::quit() {}
 
