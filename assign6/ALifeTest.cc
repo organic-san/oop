@@ -80,7 +80,7 @@ main(int argc, char **argv) {
 
     fate.mainLoop(displayInterval);
 
-    PrintMyID("1117030XX");
+    PrintMyID("111703045");
     return 0;
 
 }

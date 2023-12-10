@@ -10,7 +10,7 @@ PACKAGE  = ALife
 # The executable program
 TARGET   = ALifeTest
 # The C++ source programs (.cc) [multiple files]
-SOURCES  = AnsiPrint RandomNum World Creature Goat Grass
+SOURCES  = AnsiPrint RandomNum World Goat Grass GameObject Position
 # The C++ source program for testing your implementation
 TEST     = ALifeTest
 
