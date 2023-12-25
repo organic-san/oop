@@ -10,7 +10,7 @@ PACKAGE  = Queue
 # The executable program
 TARGET   = Queue
 # The C++ source programs (.cc) [multiple files]
-SOURCES  = AnsiPrint
+SOURCES  = AnsiPrint Queue
 # The C++ source program for testing your implementation
 TEST     = QueueTest
 

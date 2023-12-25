@@ -24,7 +24,9 @@ extern "C" {
 
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 #include "AnsiPrint.h"
+#include "Queue.h"
 
 using namespace std;
 
@@ -79,8 +81,43 @@ main(int argc, char **argv) {
 
 	// You need to provide testing exercises here
 
+	Queue<int> *myIntQPtr = new Queue<int>;
+	int temp = 0;
+
+	while (*is1 >> temp) {
+		myIntQPtr->enqueue(temp);
+	}
 	
-	PrintMyID("1117030XX");
+	Queue<int> myIntQ = *myIntQPtr;
+	// test destructor
+	delete myIntQPtr;
+
+	cout << "Integer Queue: " << endl;
+
+	while (!myIntQ.isEmpty()) {
+		cout << myIntQ.dequeue() << endl;
+	}
+
+	Queue<char> myCharQ, myCharQ1;
+	char tempc = 0;
+
+	while (*is2 >> tempc) {
+		myCharQ.enqueue(tempc);
+	}
+
+	myCharQ1 = myCharQ;
+
+	cout << "Character Queue: " << endl;
+
+	try {
+		while (true) {
+			cout << myCharQ1.dequeue() << endl;
+		}
+	} catch(const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	}
+	
+	PrintMyID("111703045");
 	return 0;
     
 }
